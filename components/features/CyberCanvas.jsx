@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { Save, Trash2, Undo } from 'lucide-react';
+import { Save, Trash2 } from 'lucide-react';
 
 export default function CyberCanvas() {
   const canvasRef = useRef(null);
@@ -20,12 +20,30 @@ export default function CyberCanvas() {
     }
   }, []);
 
+  // Get coordinates from mouse or touch event
+  const getCoords = (e) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+
+    // Handle touch events
+    if (e.touches && e.touches.length > 0) {
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+      };
+    }
+    // Handle mouse events
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  };
+
   const startDrawing = (e) => {
+    e.preventDefault(); // Prevent scrolling on touch
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const { x, y } = getCoords(e);
 
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -37,11 +55,10 @@ export default function CyberCanvas() {
 
   const draw = (e) => {
     if (!isDrawing) return;
+    e.preventDefault(); // Prevent scrolling on touch
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const { x, y } = getCoords(e);
 
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -105,6 +122,9 @@ export default function CyberCanvas() {
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={stopDrawing}
       />
     </div>
   );

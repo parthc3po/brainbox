@@ -1,4 +1,4 @@
-# Technical Documentation - Junior Hacker Dashboard
+# Technical Documentation - BrainBox
 
 ## 1. Architecture Overview
 **Stack**:
@@ -46,9 +46,12 @@
 - Fields: `name`, `category`, `quantity`, `notes`.
 
 ## 4. Feature Modules (Games/Tools)
-- **Cyber Canvas**: Client-side HTML5 Canvas drawing tool. Local file export.
-- **Mind Match**: React state-based Memory game.
-- **Cyber Duel**: Tic-Tac-Toe with simple Minimax-lite AI.
+- **Cyber Canvas**: HTML5 Canvas drawing tool with **touch support** for mobile.
+- **Code Breaker**: Wordle-style word game with **on-screen virtual keyboard** for mobile.
+- **Speed Math**: Timed arithmetic challenges.
+- **Typing Racer**: WPM measurement game.
+- **Mind Match**: Memory matching game.
+- **Cyber Duel**: Tic-Tac-Toe with AI.
 
 ## 5. API Endpoints
 - `GET /api/missions`: List all missions.
@@ -60,5 +63,11 @@
 - `GET /api/inventory`: List hardware.
 - `POST /api/inventory`: Log new item.
 
-## 5. Security Model
-- **The Vault**: Uses a `SimpleCrypto` utility (Vigenère/XOR). Keys are **NOT** stored on the server. Loss of key = Loss of data (Educational feature).
+## 6. Security Model
+- **The Vault**: Uses AES encryption via `crypto-js`. Keys are **NOT** stored on the server.
+
+## 7. Deployment
+- **Docker**: Multi-stage Dockerfile with Node.js 22.
+- **Ports**: App `3001`, Database `5433`.
+- **Target**: Raspberry Pi 4 (ARM64) compatible.
+- See `DEPLOYMENT.md` for Portainer/Tailscale setup.

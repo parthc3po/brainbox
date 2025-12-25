@@ -1,7 +1,9 @@
-# User Manual: Operation "Junior Hacker"
+# User Manual: BrainBox
 
-## Welcome, Administrator.
-This is your **Digital Control Center**. Use it to manage your learning, track your hardware, and monitor the global data streams.
+## Welcome!
+This is your **Digital Learning Hub**. Use it to manage your learning, track your hardware, play brain games, and more.
+
+> **📱 Mobile Tip**: All games work on mobile! Code Breaker has an on-screen keyboard, and Cyber Canvas supports finger drawing.
 
 ---
 
