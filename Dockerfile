@@ -1,6 +1,6 @@
 
 # Stage 1: Building the app
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 # 1. Install compatibility libraries (for Next.js) AND build tools (for native deps like sharp/gyp on ARM)
 RUN apk add --no-cache libc6-compat python3 make g++
@@ -24,7 +24,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Stage 2: Running the app
-FROM node:18-alpine AS runner
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 
