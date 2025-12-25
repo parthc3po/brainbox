@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    container_name: brainbox-app
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=postgresql://brainbox:brainbox_secret@db:5432/brainbox?schema=public
+      - NODE_ENV=production
+    depends_on:
+      - db
+    networks:
+      - brainbox-network
+
+  db:
+    image: postgres:15-alpine
+    container_name: brainbox-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=brainbox
+      - POSTGRES_PASSWORD=brainbox_secret
+      - POSTGRES_DB=brainbox
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - brainbox-network
+
+networks:
+  brainbox-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
