@@ -1,6 +1,9 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
+// Prevent static generation - this route requires database
+export const dynamic = 'force-dynamic';
+
 // For this single-user app, we'll use a fixed ID or just get the first record
 export async function GET() {
   try {

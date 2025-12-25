@@ -1,6 +1,9 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
+// Prevent static generation - this route requires database
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const entries = await prisma.journalEntry.findMany({ orderBy: { createdAt: 'desc' } });

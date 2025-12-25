@@ -1,5 +1,8 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+
+// Prevent static generation - this route requires database
+export const dynamic = 'force-dynamic';
 import Parser from 'rss-parser';
 
 const parser = new Parser();
