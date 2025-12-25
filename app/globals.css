@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-background: #fffbeb;
+  /* Amber 50 */
+  --color-foreground: #1e293b;
+  /* Slate 800 */
+
+  --color-primary: #9333ea;
+  /* Purple 600 */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #f59e0b;
+  /* Amber 500 */
+  --color-secondary-foreground: #ffffff;
+
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+
+  --color-accent: #fbcfe8;
+  /* Pink 200 */
+  --color-accent-foreground: #831843;
+
+  --color-border: #cbd5e1;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these base styles to ensure your borderColor utilities work as expected.
+*/
+@layer base {
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  /* Custom Scrollbar for BrainBox - Rounded and Fun */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fffbeb;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #d8b4fe;
+    /* Purple 300 */
+    border-radius: 10px;
+    border: 3px solid #fffbeb;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9333ea;
+  }
+}

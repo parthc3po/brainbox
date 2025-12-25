@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Mission {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  category    String   // Logic, Science, Coding, etc.
+  status      String   // Pending, In Progress, Completed
+  xpReward    Int      @default(10)
+  tools       String[] // Array of tool names used
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+}
+
+model FeedSource {
+  id       String @id @default(uuid())
+  title    String
+  url      String
+  category String
+  enabled  Boolean @default(true)
+}
+
+model UserStats {
+  id             String @id @default(uuid())
+  totalXp        Int    @default(0)
+  level          Int    @default(1)
+  missionsDone   Int    @default(0)
+  lastLogin      DateTime @default(now())
+  streakDays     Int    @default(0)
+  badges         Badge[]
+}
+
+model Badge {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  icon        String // Lucide icon name or emoji
+  unlockedAt  DateTime @default(now())
+  userStatsId String
+  userStats   UserStats @relation(fields: [userStatsId], references: [id])
+}
+
+model Item {
+  id          String @id @default(uuid())
+  name        String
+  category    String // Cable, Board, Sensor, Part
+  quantity    Int    @default(1)
+  notes       String?
+}
+
+model Cipher {
+  id        String   @id @default(uuid())
+  name      String   // "Operation Alpha"
+  content   String   // Encrypted string
+  method    String   // Caesar, Base64
+  isSolved  Boolean  @default(false)
+}
+
+model Secret {
+  id               String   @id @default(uuid())
+  title            String
+  encryptedContent String
+  createdAt        DateTime @default(now())
+}
+
+// --- Phase 2: Knowledge Vault ---
+model Topic {
+  id        String   @id @default(uuid())
+  title     String
+  category  String
+  content   String   // Markdown
+  slug      String   @unique
+}
+
+model HistoryEvent {
+  id    String   @id @default(uuid())
+  date  String   // "MM-DD" e.g., "12-25"
+  event String
+  year  String
+}
+
+model CoolWord {
+  id         String   @id @default(uuid())
+  word       String
+  definition String
+  example    String
+}
+
+// --- Phase 2: Brain Gym ---
+model GameScore {
+  id        String   @id @default(uuid())
+  game      String   // "SPEED_MATH", "TYPING", "CODE_BREAKER"
+  score     Int
+  player    String   // Name for leaderboard
+  createdAt DateTime @default(now())
+}
+
+// --- Phase 2: Creative Corner ---
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   // Markdown
+  author    String
+  createdAt DateTime @default(now())
+}
+
+model Art {
+  id        String   @id @default(uuid())
+  title     String
+  data      String   // Base64 or JSON grid
+  author    String
+  likes     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model JournalEntry {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   // AES Encrypted
+  createdAt DateTime @default(now())
+}
+
+// --- Phase 2: Family Utilities ---
+model Chore {
+  id         String   @id @default(uuid())
+  title      String
+  xpReward   Int
+  status     String   // PENDING, COMPLETED
+  assignedTo String
+}
+
+model Poll {
+  id       String       @id @default(uuid())
+  question String
+  active   Boolean      @default(true)
+  options  PollOption[]
+}
+
+model PollOption {
+  id     String @id @default(uuid())
+  text   String
+  votes  Int    @default(0)
+  pollId String
+  poll   Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+}
+
+model Shout {
+  id        String   @id @default(uuid())
+  message   String
+  author    String
+  color     String   @default("#00ff41")
+  createdAt DateTime @default(now())
+}
